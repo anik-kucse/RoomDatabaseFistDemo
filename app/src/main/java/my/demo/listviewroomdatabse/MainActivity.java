@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,29 +17,31 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    int NEW_ACTIVITY_REQUEST_CODE = 1;
-    ListView listView;
+
+    RecyclerView recyclerView;
     UserRoomDatabase userRoomDatabase;
-    CustomAdapter customAdapter;
+    RecyclerViewAadapter recyclerViewAadapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = findViewById(R.id.listView);
-        customAdapter = new CustomAdapter(getApplicationContext());
-        listView.setAdapter(customAdapter);
+        recyclerView = findViewById(R.id.recycleView);
+        recyclerViewAadapter = new RecyclerViewAadapter(this);
+        recyclerView.setAdapter(recyclerViewAadapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 userRoomDatabase = UserRoomDatabase.getUserRoomDatabase(getApplicationContext());
-                customAdapter.addUsers(userRoomDatabase.userDao().getAllUser());
+                recyclerViewAadapter.addUsers(userRoomDatabase.userDao().getAllUser());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        customAdapter.notifyDataSetChanged();
+                        recyclerViewAadapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -65,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 userRoomDatabase.userDao().insert(user);
-                                customAdapter.addLastUser(userRoomDatabase.userDao().getLastUser());
+                                recyclerViewAadapter.addLastUser(userRoomDatabase.userDao().getLastUser());
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        customAdapter.notifyDataSetChanged();
+                                        recyclerViewAadapter.notifyDataSetChanged();
                                     }
                                 });
                             }

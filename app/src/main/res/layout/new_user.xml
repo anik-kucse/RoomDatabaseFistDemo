@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:hint="Age"
-        android:inputType="textAutoComplete"
+        android:inputType="number"
         android:textColor="#999595"
         android:textSize="20sp"
         android:padding="15dp"
