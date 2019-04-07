@@ -12,6 +12,9 @@ public interface UserDao {
     @Query("SELECT * FROM user_table")
     List<User> getAllUser();
 
+    @Query("SELECT * FROM user_table ORDER BY id DESC LIMIT 1")
+    List<User> getLastUser();
+
     @Insert
     void insert(User user);
 

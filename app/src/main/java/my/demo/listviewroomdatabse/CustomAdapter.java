@@ -43,6 +43,10 @@ public class CustomAdapter extends BaseAdapter {
         this.userList.addAll(users);
     }
 
+    public  void addLastUser(List<User> user){
+        this.userList.addAll(user);
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.activity_listcontent, null);
