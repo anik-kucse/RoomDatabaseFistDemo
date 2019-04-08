@@ -16,7 +16,6 @@ public abstract class UserRoomDatabase extends RoomDatabase {
     public static UserRoomDatabase getUserRoomDatabase(Context context){
         if(INSTANCE == null){
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), UserRoomDatabase.class, "user_table")
-                    .fallbackToDestructiveMigration()
                     .addCallback(sRoomDatabaseCallback)
                     .build();
         }
